@@ -1,4 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
 /*!
  * bootswatch v3.3.7
  * Homepage: http://bootswatch.com
@@ -4595,7 +4595,8 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #888888;
 }
 .navbar-inverse {
-  background-image:url(aura.gif);
+    background: blue;
+  /*background-image:url(aura.gif);*/
   background-repeat:no-repeat;
   background-size:cover;
   border-color: #080808;
