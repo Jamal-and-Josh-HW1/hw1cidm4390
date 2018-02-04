@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,113 +6,116 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using QuizLibrary;
-using QuizProgramMVC.DAL;
+using CodingClub.DAL;
+using CodingClub.Models;
 
-namespace QuizProgramMVC.Controllers
+namespace CodingClub.Controllers
 {
-    public class StudentsAdminController : Controller
+    public class MembersController : Controller
     {
-        private QuizDbContext db = new QuizDbContext();
+        private ClubContext db = new ClubContext();
 
-        // GET: StudentsAdmin
+        // GET: Members
         public ActionResult Index()
         {
-            return View(db.Students.ToList());
+            return View(db.Members.ToList());
         }
 
-        // GET: StudentsAdmin/Details/5
+        // GET: MembersAdmin/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
-            if (student == null)
+            Member member = db.Members.Find(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(member);
         }
 
-        // GET: StudentsAdmin/Create
+        // GET: MembersAdmin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentsAdmin/Create
+        // POST: MembersAdmin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Correct,Attempts,Score")] Student student)
+        public ActionResult Create([Bind(Include = "Id,MemberText,AnswerText,AnswerJustification,MemberRating,MemberDate")] Member member)
         {
             if (ModelState.IsValid)
             {
-                db.Students.Add(student);
+                db.Members.Add(member);
                 db.SaveChanges();
+                Session["QuizViewModel"] = null;
                 return RedirectToAction("Index");
             }
 
-            return View(student);
+            return View(member);
         }
 
-        // GET: StudentsAdmin/Edit/5
+        // GET: MembersAdmin/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
-            if (student == null)
+            Member member = db.Members.Find(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(member);
         }
 
-        // POST: StudentsAdmin/Edit/5
+        // POST: MembersAdmin/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Correct,Attempts,Score")] Student student)
+        public ActionResult Edit([Bind(Include = "Id,MemberText,AnswerText,AnswerJustification,MemberRating,MemberDate")] Member member)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+                db.Entry(member).State = EntityState.Modified;
                 db.SaveChanges();
+                Session["QuizViewModel"] = null;
                 return RedirectToAction("Index");
             }
-            return View(student);
+            return View(member);
         }
 
-        // GET: StudentsAdmin/Delete/5
+        // GET: MembersAdmin/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(id);
-            if (student == null)
+            Member member = db.Members.Find(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(member);
         }
 
-        // POST: StudentsAdmin/Delete/5
+        // POST: MembersAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Student student = db.Students.Find(id);
-            db.Students.Remove(student);
+            Member member = db.Members.Find(id);
+            db.Members.Remove(member);
             db.SaveChanges();
+            Session["QuizViewModel"] = null;
             return RedirectToAction("Index");
         }
 
