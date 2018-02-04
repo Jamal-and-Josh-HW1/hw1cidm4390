@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,113 +6,118 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using QuizLibrary;
-using QuizProgramMVC.DAL;
+using CodingClub.DAL;
+using CodingClub.Models;
 
-namespace QuizProgramMVC.Controllers
+namespace CodingClub.Controllers
 {
-    public class QuestionsAdminController : Controller
+    public class TeamsController : Controller
     {
-        private QuizDbContext db = new QuizDbContext();
+        private ClubContext db = new ClubContext();
 
-        // GET: QuestionsAdmin
+        // GET: Teams
         public ActionResult Index()
         {
-            return View(db.Questions.ToList());
+
+            return View(db.Teams.ToList());
         }
 
-        // GET: QuestionsAdmin/Details/5
+        // GET: TeamsAdmin/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Team team = db.Teams.Find(id);
+            if (team == null)
             {
                 return HttpNotFound();
             }
-            return View(question);
+
+            return View(team);
         }
 
-        // GET: QuestionsAdmin/Create
+        // GET: TeamsAdmin/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: QuestionsAdmin/Create
+        // POST: TeamsAdmin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,QuestionText,AnswerText,AnswerJustification,QuestionRating,QuestionDate")] Question question)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Organization,ContactNumber")] Team team)
         {
             if (ModelState.IsValid)
             {
-                db.Questions.Add(question);
+                db.Teams.Add(team);
                 db.SaveChanges();
+                Session["QuizViewModel"] = null;
                 return RedirectToAction("Index");
             }
 
-            return View(question);
+            return View(team);
         }
 
-        // GET: QuestionsAdmin/Edit/5
+        // GET: TeamsAdmin/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Team team = db.Teams.Find(id);
+            if (team == null)
             {
                 return HttpNotFound();
             }
-            return View(question);
+            return View(team);
         }
 
-        // POST: QuestionsAdmin/Edit/5
+        // POST: TeamsAdmin/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,QuestionText,AnswerText,AnswerJustification,QuestionRating,QuestionDate")] Question question)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Organization,ContactNumber")] Team team)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(question).State = EntityState.Modified;
+                db.Entry(team).State = EntityState.Modified;
                 db.SaveChanges();
+                Session["QuizViewModel"] = null;
                 return RedirectToAction("Index");
             }
-            return View(question);
+            return View(team);
         }
 
-        // GET: QuestionsAdmin/Delete/5
+        // GET: TeamsAdmin/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            Team team = db.Teams.Find(id);
+            if (team == null)
             {
                 return HttpNotFound();
             }
-            return View(question);
+            return View(team);
         }
 
-        // POST: QuestionsAdmin/Delete/5
+        // POST: TeamsAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Question question = db.Questions.Find(id);
-            db.Questions.Remove(question);
+            Team team = db.Teams.Find(id);
+            db.Teams.Remove(team);
             db.SaveChanges();
+            Session["QuizViewModel"] = null;
             return RedirectToAction("Index");
         }
 
