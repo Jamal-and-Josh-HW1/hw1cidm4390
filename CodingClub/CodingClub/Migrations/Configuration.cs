@@ -1,19 +1,16 @@
-namespace QuizProgramMVC.Migrations
+namespace CodingClub.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<QuizProgramMVC.DAL.QuizDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CodingClub.DAL.ClubContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "QuizProgramMVC.DAL.QuizDbContext";
+            ContextKey = "CodingClub.DAL.ClubContext";
         }
 
-        protected override void Seed(QuizProgramMVC.DAL.QuizDbContext context)
+        protected override void Seed(CodingClub.DAL.ClubContext context)
         {
             //  This method will be called after migrating to the latest version.
 
